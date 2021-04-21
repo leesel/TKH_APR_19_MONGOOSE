@@ -10,19 +10,19 @@ const findAll = async () => {
 
 // a create user one
 const createUser = async () => {
-  const users = await User.insertOne({ name: "Leesel", age: 28, status: "unknown" })
+  const users = await User.insertMany({ name: "Leesel", age: 28, status: "unknown" })
   console.log("Added Leesel as User", users)
 }
 
 // update user one
 const updateUser = async () => {
-  const users = await User.updateOne({ name: "Leesel" }, { $set: { name: "Lee", age: 29 }, $currentDate: { lastModified: true } })
+  const users = await User.updateOne({ name: "Leesel", age: 28, status: "unknown"  }, { $set: { name: "Lee", age: 29, status: "active" }, $currentDate: { lastModified: true } })
   console.log("Update Leesel:", users)
 }
 
 // a delete user one
 const deleteUser = async () => {
-  const users = await User.deleteOne({ name: "Leesel", age: 28, status: "unknown" })
+  const users = await User.deleteOne({ name: "Lee", age: 29, status: "active" })
   console.log("Delete Leesel:", users)
 }
 
@@ -40,12 +40,12 @@ const findAllActiveAndYoungerThan25 = async () => {
 
 
 const run = async () => {
-  await findAll()
   await createUser()
-  await deleteUser()
+  await findAll()
   await updateUser()
   await findAllOlderThan25()
   await findAllActiveAndYoungerThan25()
+  await deleteUser()
   process.exit()  
 }
 run()
